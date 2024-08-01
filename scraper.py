@@ -1,6 +1,16 @@
 from requests_html import HTMLSession
 
 def matchStats(team):
+    # fetch user agent from config file
+    userAgent = ""
+    with open("config.txt", "r") as file:
+        userAgent = file.readlines()[0]
+
+    if userAgent == "":
+        errMsg = "User Agent undefined. Refer to the README for more information."
+        print(errMsg)
+        return {"ERROR": errMsg}
+
     url = f'https://www.google.com/search?q={team}+last+score'
     response = HTMLSession().get(url, headers={'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36'})
     data = {
